@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Button({ title, onClick, variant, disabled, fullwidth, type }) {
-    let className = "bg-primary p-1 text-white";
+    let className = "bg-primary p-1 text-white ml-1 mr-1";
 
     if (fullwidth) {
         className += " w-full";

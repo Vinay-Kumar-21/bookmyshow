@@ -33,20 +33,20 @@ const Login = () => {
     return (
         <div className="flex justify-center h-screen items-center bg-primary">
             <div className="card p - 3 w - 400">
-                <h1 className="text-xl mb-1">Welcome Again! Please Login</h1>
+                <h1 className="text-xl mb-1 mr-1 ml-1">Welcome Again! Please Login</h1>
                 <hr />
                 <Form layout="vertical" className="mt - 1" onFinish={() => { }}>
                     <Form.Item
                         label="Email"
                         name="email"
-                        rules={[{ required: true, message: "Please input your email!" }]}
+                        rules={[{ required: true, message: "Please enter your email!" }]}
                     >
                         <input type="email" />
                     </Form.Item>
                     <Form.Item
                         label="Password"
                         name="password"
-                        rules={[{ required: true, message: "Please input your password!" }]}
+                        rules={[{ required: true, message: "Please enter your password!" }]}
                     >
                         <input type="password" />
                     </Form.Item>
