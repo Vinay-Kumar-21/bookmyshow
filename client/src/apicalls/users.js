@@ -13,3 +13,11 @@ export const RegisterUser = async (payload) => {
 }
 
 //login
+export const LoginUser = async (payload) => {
+    try {
+        const response = await axiosInstance.post('/login', payload);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}
