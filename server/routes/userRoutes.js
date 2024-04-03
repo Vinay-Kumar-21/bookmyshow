@@ -8,7 +8,7 @@ router.post('/register', async (req, res) => {
         if (userExists) {
             res.status(403).send({
                 success: false,
-                message: "User already exists"
+                message: "User already exists",
             })
             return;
         }
