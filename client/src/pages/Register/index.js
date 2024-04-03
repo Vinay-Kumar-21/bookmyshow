@@ -32,7 +32,7 @@ const Register = () => {
             <div className="card p-3 w-400 ">
                 <h1 className="text-xl mb-1">Welcome to VK Shows! Please Register</h1>
                 <hr />
-                <Form layout="vertical" className="mt - 1" onFinish={() => { }}>
+                <Form layout="vertical" className="mt-1" onFinish={() => { }}>
                     <Form.Item
                         label="Name"
                         name="name"
@@ -55,7 +55,7 @@ const Register = () => {
                         <input type="password" />
                     </Form.Item>
 
-                    <div className="flex flex - col mt - 2 gap - 1">
+                    <div className="flex flex-col mt-2 gap-1">
                         <Button fullWidth title="REGISTER" type="submit" />
                         <Link to="/login" className="text-primary">
                             {' '}
