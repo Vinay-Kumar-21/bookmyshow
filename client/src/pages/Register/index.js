@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Form, message } from 'antd';
 import Button from '../../components/Button';
@@ -23,11 +24,11 @@ const Register = () => {
         }
     };
 
-    // useEffect(() => {
-    //     if (localStorage.getItem('token')) {
-    //         navigate('/');
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate('/');
+        }
+    }, []);
 
     return (
         <div className="flex justify-center h-screen items-center bg-primary">

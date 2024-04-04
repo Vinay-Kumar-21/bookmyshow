@@ -8,7 +8,7 @@ module.exports = function (req, res) {
     } catch (err) {
         res.status(401).send({
             success: false,
-            message: "Session Expired"
+            message: "Invalid Token"
         })
     }
 }
