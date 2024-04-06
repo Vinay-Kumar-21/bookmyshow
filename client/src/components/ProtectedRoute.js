@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { UseDispatch, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 //api
@@ -12,7 +12,7 @@ import { SetUser } from "../redux/userSlice";
 import { HideLoading, ShowLoading } from '../redux/loaderSlice';
 
 function ProtectedRoute({ children }) {
-    const { user } = useSelector((state) => { state.users });
+    const { user } = useSelector((state) => state.users);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -45,7 +45,7 @@ function ProtectedRoute({ children }) {
         } else {
             navigate('/login')
         }
-    })
+    }, []);
 
     return (
         user && (
@@ -59,13 +59,15 @@ function ProtectedRoute({ children }) {
 
                     <div className='bg-white p-1 flex gap-1'>
                         <i className="ri-shield-user-line text-primary mt-1"></i>
-                        <h1 className='text-sm underline' onClick={() => {
-                            if (user.isAdmin) {
-                                navigate("/admin")
-                            } else {
-                                navigate("/profile")
-                            }
-                        }}>
+                        <h1 className='text-sm underline'
+                            onClick={() => {
+                                if (user.isAdmin) {
+                                    navigate("/admin")
+                                } else {
+                                    navigate("/profile")
+                                }
+                            }}
+                        >
                             {user.name}
                         </h1>
                         <i

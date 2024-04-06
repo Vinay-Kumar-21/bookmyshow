@@ -26,7 +26,7 @@ export const LoginUser = async (payload) => {
 //get current user
 export const GetCurrentUser = async () => {
     try {
-        const response = await axiosInstance.post('/get-cuurent-user', {
+        const response = await axiosInstance.get('/get-current-user', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
