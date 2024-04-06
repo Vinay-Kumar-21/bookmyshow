@@ -1,9 +1,8 @@
-const router = require('express').Router();
-const movies = require("../models/movieModel");
-const authMiddleware = require("../middlewares/authMiddleware");
+const router = require("express").Router();
+const Movie = require('../models/movieModel');
+const authMiddleware = require('../middlewares/authMiddleware');
 
-
-//create
+// Create
 router.post('/add-movie', authMiddleware, async (req, res) => {
     try {
         const movie = req.body;
@@ -11,67 +10,63 @@ router.post('/add-movie', authMiddleware, async (req, res) => {
         await newMovie.save();
         res.status(200).send({
             success: true,
-            message: "Movie Added Successfully"
+            message: 'Movie added successfully',
         });
-    }
-    catch (error) {
+    } catch (error) {
         res.status(500).send({
             success: false,
-            message: error.message
+            message: error.message,
         });
     }
-})
+});
 
-//Read
+// Read
 router.get('/get-all-movies', async (_, res) => {
     try {
         const movies = await Movie.find();
         res.status(200).send({
             success: true,
-            message: "Movie fetched successfully",
-            data: movies
-        })
-    }
-    catch (error) {
+            message: "Movies fetched successfully",
+            data: movies,
+        });
+    } catch (error) {
         res.status(500).send({
             success: false,
-            message: error.message
-        })
+            message: error.message,
+        });
     }
-})
+});
 
-//update
-router.put("/update-movie", authMiddleware, async (req, res) => {
+// Update
+router.put("/update-movie", authMiddleware, async (request, response) => {
     try {
-        await Movie.findByIdAndUpdate(req.body.movieId, req.body);
-        res.send({
-            success: true,
-            message: "Movie Updated successfully"
-        })
-    }
-    catch (error) {
-        res.status(500).send({
-            success: false,
-            message: error.message
-        })
-    }
-})
-
-//delete
-router.delete("/delete-movie", authMiddleware, async (req, res) => {
-    try {
-        await Movie.findByIdAndDelete(req.query.movieId);
+        await Movie.findByIdAndUpdate(request.body.movieId, request.body);
         response.send({
             success: true,
-            message: "Movie Deleted Successfully"
-        })
-    }
-    catch (error) {
-        res.status(500).send({
+            message: "Movie Updated Successfully",
+        });
+    } catch (err) {
+        response.status(500).send({
             success: false,
-            message: error.message
-        })
+            message: err.message
+        });
     }
-})
+});
+
+// Delete
+router.delete("/delete-movie", authMiddleware, async (request, response) => {
+    try {
+        await Movie.findByIdAndDelete(request.query.movieId);
+        response.send({
+            success: true,
+            message: "Movie Deleted Successfully",
+        });
+    } catch (err) {
+        response.status(500).send({
+            success: false,
+            message: err.message
+        });
+    }
+});
 
 module.exports = router;

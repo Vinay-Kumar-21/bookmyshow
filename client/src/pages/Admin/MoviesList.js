@@ -1,73 +1,77 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import { Table, message } from 'antd'
-import { UseDispatch, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 
 
-import Button from '../../components/Button'
+import Button from '../../components/Button.js'
 import MovieForm from './MovieForm'
 import { HideLoading, ShowLoading } from '../../redux/loaderSlice'
-//import { DeleteMovies, GetAllMovies } from "../../apicalls/movies"
+import { DeleteMovie, GetAllMovies } from "../../apicalls/movies"
 
 
 function MoviesList() {
-    const [movies, setMovies] = useState([]);
-    const [showMovieFormModal, setShowMovieFormModal] = useState(false);
-    const [selectedMovie, setSelectedMovie] = useState(null);
-    const [formType, setFormType] = useState("add");
+    const [movies, setMovies] = React.useState([]);
+    const [showMovieFormModal, setShowMovieFormModal] = React.useState(false);
+    const [selectedMovie, setSelectedMovie] = React.useState(null);
+    const [formType, setFormType] = React.useState("add");
     const dispatch = useDispatch();
-
     const getData = async () => {
         try {
             dispatch(ShowLoading());
-            // const response = await GetAllMovies();
-
-            // if (response.success) {
-            //     setMovies(response.data);
-            // }
-            // else {
-            //     message.error(response.message);
-            // }
+            const response = await GetAllMovies();
+            if (response.success) {
+                setMovies(response.data);
+            } else {
+                message.error(response.message);
+            }
             dispatch(HideLoading());
         } catch (error) {
             dispatch(HideLoading());
             message.error(error.message);
         }
-    }
+    };
 
     const handleDelete = async (movieId) => {
         try {
             dispatch(ShowLoading());
-            // const response = await DeleteMovie(movieId);
-            // if (response.success) {
-            //     message.success(response.message);
-            //     getData();
-            // }
-            // else {
-            //     message.error(response.message);
-            // }
+            const response = await DeleteMovie(movieId);
+            if (response.success) {
+                message.success(response.message);
+                getData();
+            } else {
+                message.error(response.message);
+            }
             dispatch(HideLoading());
         } catch (error) {
             dispatch(HideLoading());
             message.error(error.message);
         }
-    }
+    };
 
     const columns = [
         {
             title: "Poster",
             dataIndex: "poster",
             render: (posterLink) => {
+                // All your data manipulations.
                 return (
-                    <img src={posterLink} alt='poster' height="60" width="80" className='br-1' />
+                    <img
+                        src={posterLink}
+                        alt="poster"
+                        height="60"
+                        width="80"
+                        className="br-1"
+                    />
                 );
-            }
+            },
         },
         {
             title: "Name",
             dataIndex: "title",
         },
+
         {
             title: "Description",
             dataIndex: "description",
@@ -78,7 +82,7 @@ function MoviesList() {
         },
         {
             title: "Genre",
-            dataIndex: "genre"
+            dataIndex: "genre",
         },
         {
             title: "Language",
@@ -89,14 +93,14 @@ function MoviesList() {
             dataIndex: "releaseDate",
             render: (text, record) => {
                 return moment(record.releaseDate).format("DD-MM-YYYY");
-            }
+            },
         },
         {
             title: "Action",
             dataIndex: "action",
             render: (text, record) => {
                 return (
-                    < div className='flex gap-1' >
+                    <div className="flex gap-1">
                         <i
                             className="ri-delete-bin-line"
                             onClick={() => {
@@ -111,39 +115,41 @@ function MoviesList() {
                                 setShowMovieFormModal(true);
                             }}
                         ></i>
-                    </div >
-                )
-            }
-        }
+                    </div>
+                );
+            },
+        },
     ];
 
     useEffect(() => {
         getData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
 
     return (
         <div>
-            <div className='flex justify-end mb-1'>
-                <Button title="Add Movie" variant="outlined"
+            <div className="flex justify-end mb-1">
+                <Button
+                    title="Add Movie"
+                    variant="outlined"
                     onClick={() => {
                         setShowMovieFormModal(true);
-                        setFormType("edit");
-                    }}></Button>
+                        setFormType("add");
+                    }}
+                />
             </div>
 
             <Table columns={columns} dataSource={movies} />
 
-            {
-                showMovieFormModal && (
-                    <MovieForm
-                        onClose={() => setShowMovieFormModal(false)}
-                        selectedMovie={selectedMovie}
-                        setSelectedMovie={setSelectedMovie}
-                        formType={formType}
-                        getData={getData} />
-                )
-            }
+            {showMovieFormModal && (
+                <MovieForm
+                    onClose={() => setShowMovieFormModal(false)}
+                    selectedMovie={selectedMovie}
+                    setSelectedMovie={setSelectedMovie}
+                    formType={formType}
+                    getData={getData}
+                />
+            )}
         </div>
     )
 }

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const movieSchema = new mongoose.Schema({
     title: {
@@ -25,6 +25,6 @@ const movieSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-})
+});
 
 module.exports = mongoose.model("movies", movieSchema);
