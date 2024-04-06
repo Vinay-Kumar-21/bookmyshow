@@ -16,3 +16,5 @@ const loaderSlice = createSlice({
 })
 
 export const { ShowLoading, HideLoading } = loaderSlice.actions;
+
+export default loaderSlice.reducer;
