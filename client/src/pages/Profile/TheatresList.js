@@ -117,7 +117,7 @@ function TheatresList() {
 
     useEffect(() => {
         getData();
-    }, []);
+    },[]);
     return (
         <div>
             <div className='flex justify-end mb-1'>

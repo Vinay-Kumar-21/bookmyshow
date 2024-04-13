@@ -20,9 +20,9 @@ export const GetAllTheatres=async()=>{
 }
 
 
-export const GetAllTheatresByOwner=async(payload)=>{
+export const GetAllTheatresByOwner=async()=>{
     try{
-        const response=await axiosInstance.get("/api/theatre/get-all-theatres-by-owner",payload);
+        const response=await axiosInstance.get("/api/theatre/get-all-theatres-by-owner");
         return response.data;
     }catch(error){
         return error;
