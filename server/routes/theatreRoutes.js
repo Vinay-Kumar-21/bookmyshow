@@ -69,7 +69,7 @@ router.put("/update-theatre",authMiddelware,async(request,response)=>{
 
 
 // Delete
-router.delete("/delete-theatre", authMiddleware, async (request, response) => {
+router.delete("/delete-theatre", authMiddelware, async (request, response) => {
     try {
         await Theatre.findByIdAndDelete(request.query.theatreId);
         response.send({

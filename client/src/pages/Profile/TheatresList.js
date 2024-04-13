@@ -5,7 +5,7 @@ import { message, Table } from "antd"
 import Button from "../../components/Button.js";
 import { HideLoading, ShowLoading } from "../../redux/loaderSlice.js"
 import TheatreForm from "./TheatreForm.js"
-//import { DeleteTheatre, GetAllTheatresByOwner } from "../../apicalls/theatres";
+import { DeleteTheatre, GetAllTheatresByOwner } from "../../apicalls/theatres";
 //import Shows from './Shows'
 
 
@@ -22,15 +22,15 @@ function TheatresList() {
     const getData = async () => {
         try {
             dispatch(ShowLoading());
-            // const response = await GetAllTheatresByOwner({
-            //     owner: user._id,
-            // });
-            // if (response.success) {
-            //     setTheatres(response.data);
-            // }
-            // else {
-            //     message.error(response.message);
-            // }
+            const response = await GetAllTheatresByOwner({
+                owner: user._id,
+            });
+            if (response.success) {
+                setTheatres(response.data);
+            }
+            else {
+                message.error(response.message);
+            }
             dispatch(HideLoading());
 
         } catch (error) {
@@ -39,22 +39,22 @@ function TheatresList() {
         }
     }
 
-    // const handleDelete = async (theatreId) => {
-    //     try {
-    //         dispatch(ShowLoading());
-    //         const response = await DeleteTheatre(theatreId);
-    //         if (response.success) {
-    //             message.success(response.message);
-    //             getData();
-    //         } else {
-    //             message.error(response.message);
-    //         }
-    //         dispatch(HideLoading());
-    //     } catch (error) {
-    //         dispatch(HideLoading());
-    //         message.error(error.message);
-    //     }
-    // }
+    const handleDelete = async (theatreId) => {
+        try {
+            dispatch(ShowLoading());
+            const response = await DeleteTheatre(theatreId);
+            if (response.success) {
+                message.success(response.message);
+                getData();
+            } else {
+                message.error(response.message);
+            }
+            dispatch(HideLoading());
+        } catch (error) {
+            dispatch(HideLoading());
+            message.error(error.message);
+        }
+    }
 
     const columns = [
         {
@@ -91,8 +91,8 @@ function TheatresList() {
                 return (
                     <div className='flex gap-1 items-center'>
                         <i className='ri-delete-bin-line'
-                        // onClick={() => {
-                        //     handleDelete(rowData._id)}}
+                        onClick={() => {
+                            handleDelete(rowData._id)}}
                         ></i>
                         <i className='ri-pencil-line' onClick={() => {
                             setFormType("edit");
@@ -103,8 +103,8 @@ function TheatresList() {
                         {rowData.isActive && (
                             <span className='underline'
                                 onClick={() => {
-                                    // setSelectedTheatre(rowData);
-                                    // setOpenShowsModal();
+                                    setSelectedTheatre(rowData);
+                                    //setOpenShowsModal();
                                 }}>
                                 Shows
                             </span>
