@@ -1,4 +1,5 @@
 import { axiosInstance } from ".";
+import axios from "axios"
 
 export const AddTheatre = async (payload) => {
   try {
@@ -14,7 +15,16 @@ export const AddTheatre = async (payload) => {
 
 export const GetAllTheatres = async () => {
   try {
-    const response = await axiosInstance.get("/api/theatre/get-all-theatres");
+    const response= await axios({
+      method:"get",
+    url: "http://localhost:8082/api/theatre/get-all-theatres",
+      headers: {
+          withCredentials: true,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+  }) 
+    //const response = await axiosInstance.get("/api/theatre/get-all-theatres");
     return response.data;
   } catch (err) {
     return err;
@@ -23,9 +33,19 @@ export const GetAllTheatres = async () => {
 
 export const GetAllTheatresByOwner = async () => {
   try {
-    const response = await axiosInstance.get(
-      "/api/theatre/get-all-theatres-by-owner"
-    );
+    const response=await axios({
+      method:"get",
+    url: "http://localhost:8082/api/theatre/get-all-theatres-by-owner",
+      headers: {
+          withCredentials: true,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+  }) 
+    // const response = await axiosInstance.get(
+    //   "/api/theatre/get-all-theatres-by-owner"
+    // );
+    //console.log(response);
     return response.data;
   } catch (err) {
     return err;
@@ -55,47 +75,3 @@ export const DeleteTheatre = async (theatreId) => {
   }
 };
 
-// Shows APIs
-export const AddShow = async (payload) => {
-  try {
-    const response = await axiosInstance.post("/api/theatre/add-show", payload);
-    return response.data;
-  } catch (err) {
-    return err;
-  }
-};
-
-export const GetAllShowsByTheatre = async (payload) => {
-  try {
-    const response = await axiosInstance.post(
-      "/api/theatre/get-all-shows-by-theatre",
-      payload
-    );
-    return response.data;
-  } catch (err) {
-    return err;
-  }
-};
-
-export const DeleteShow = async (showId) => {
-  try {
-    const response = await axiosInstance.delete(
-      `/api/theatre/delete-show?showId=${showId}`
-    );
-    return response.data;
-  } catch (err) {
-    return err;
-  }
-};
-
-export const GetAllTheatresByMovie = async (payload) => {
-  try {
-    const response = await axiosInstance.post(
-      "/api/theatre/get-all-theatres-by-movie",
-      payload
-    );
-    return response.data;
-  } catch (err) {
-    return err.response;
-  }
-};

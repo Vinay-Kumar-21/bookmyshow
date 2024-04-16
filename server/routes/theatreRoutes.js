@@ -46,7 +46,8 @@ router.get(
 
 router.get("/get-all-theatres", authMiddleware, async (_, response) => {
   try {
-    const theatres = await Theatre.find().populate("owner").select("-password");
+    const theatres = await Theatre.find();
+    console.log("+++++++++++++>>>>>"+theatres);
     response.status(200).send({
       success: true,
       message: "Theatres fetched successfully!",
