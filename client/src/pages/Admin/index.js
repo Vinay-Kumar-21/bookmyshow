@@ -3,6 +3,7 @@ import React from 'react'
 
 import PageTitle from "../../components/PageTitle";
 import MoviesList from './MoviesList';
+import TheatresList from "./TheatresList";
 
 function Admin() {
     return (
@@ -14,7 +15,7 @@ function Admin() {
                 </Tabs.TabPane>
 
                 <Tabs.TabPane tab="Theatres" key="theatres">
-                    Theatres List
+                    <TheatresList/>
                 </Tabs.TabPane>
             </Tabs>
         </div>
