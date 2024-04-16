@@ -101,7 +101,7 @@ function TheatresList() {
 
   useEffect(() => {
     getData();
-  },[]);
+  }, []);
   return (
     <div>
       <Table columns={columns} dataSource={theatres} />
