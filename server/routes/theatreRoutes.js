@@ -29,7 +29,7 @@ router.get(
   async (request, response) => {
     try {
       const theatres = await Theatre.find({ owner: request.body.userId });
-      console.log(theatres);
+      //console.log(theatres);
       response.status(200).send({
         success: true,
         message: "Theatres fetched successfully!",
@@ -47,7 +47,7 @@ router.get(
 router.get("/get-all-theatres", authMiddleware, async (_, response) => {
   try {
     const theatres = await Theatre.find();
-    console.log("+++++++++++++>>>>>"+theatres);
+    //console.log("+++++++++++++>>>>>"+theatres);
     response.status(200).send({
       success: true,
       message: "Theatres fetched successfully!",
