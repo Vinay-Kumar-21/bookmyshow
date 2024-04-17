@@ -7,7 +7,7 @@ import Profile from './pages/Profile';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Register from './pages/Register';
-
+import TheatresForMovie from './pages/TheatresForMovie';
 
 //styles
 import "./stylesheets/alignments.css";
@@ -18,6 +18,7 @@ import "./stylesheets/theme.css";
 
 //components
 import ProtectedRoute from './components/ProtectedRoute';
+
 
 
 function App() {
@@ -32,8 +33,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>}></Route>
-          <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>}></Route>
           <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>}></Route>
+          <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>}></Route>
+          <Route path='/movie/:id' element={<ProtectedRoute><TheatresForMovie/></ProtectedRoute>}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>
         </Routes>
