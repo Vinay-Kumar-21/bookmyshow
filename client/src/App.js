@@ -8,6 +8,7 @@ import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import TheatresForMovie from './pages/TheatresForMovie';
+import BookShow from './pages/BookShow';
 
 //styles
 import "./stylesheets/alignments.css";
@@ -35,6 +36,7 @@ function App() {
           <Route path='/' element={<ProtectedRoute><Home /></ProtectedRoute>}></Route>
           <Route path='/admin' element={<ProtectedRoute><Admin /></ProtectedRoute>}></Route>
           <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>}></Route>
+          <Route path='/book-show/:id' element={<ProtectedRoute><BookShow/></ProtectedRoute>}></Route>
           <Route path='/movie/:id' element={<ProtectedRoute><TheatresForMovie/></ProtectedRoute>}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>
