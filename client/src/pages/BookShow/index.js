@@ -116,26 +116,26 @@ function BookShow(){
         }
     }
 
-    const onToken=async (token)=>{
-      try{
-        dispatch(ShowLoading());
-        // const response=await MakePayment(
-        //   token,
-        //   selectedSeats.length * show.ticketPrice * 100
-        // );
-        // if(response.success){
-        //   message.success(response.message);
-        //   //book(response.data)
-        // }
-        // else{
-        //   message.error(response.message);
-        // }
-        dispatch(HideLoading());
-      }catch(error){
-        message.error(error.message);
-        dispatch(HideLoading());
-      }
-    }
+    // const onToken=async (token)=>{
+    //   try{
+    //     dispatch(ShowLoading());
+    //     const response=await MakePayment(
+    //       token,
+    //       selectedSeats.length * show.ticketPrice * 100
+    //     );
+    //     if(response.success){
+    //       message.success(response.message);
+    //       //book(response.data)
+    //     }
+    //     else{
+    //       message.error(response.message);
+    //     }
+    //     dispatch(HideLoading());
+    //   }catch(error){
+    //     message.error(error.message);
+    //     dispatch(HideLoading());
+    //   }
+    // }
     useEffect(()=>{
         getData();
     },[])
@@ -179,7 +179,7 @@ function BookShow(){
                         </div>
                         <StripeCheckout
                         billingAddress
-                        token={onToken}
+                        //token={onToken}
                         stripeKey={STRIPE_KEY}
                         currency="INR"
                         amount={selectedSeats.length * show.ticketPrice * 100}
