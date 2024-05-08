@@ -7,7 +7,7 @@ import { HideLoading,ShowLoading } from "../../redux/loaderSlice";
 import Button from "../../components/Button";
 import moment from "moment";
 import StripeCheckout from "react-stripe-checkout";
-//import { MakePayment, BookShowTickets } from "../../apicalls/bookings"
+import { MakePayment, BookShowTickets } from "../../apicalls/bookings"
 
 
 
@@ -19,7 +19,7 @@ function BookShow(){
     const [show,setShow]=useState({});
     const [selectedSeats,setSelectedSeats]=useState([]);
 
-    const STRIPE_KEY="pk_test_51P6xFNSGkd7D0uBHYVVN7GnFaA0WEw9lD7yCLOOpV4Ce4P7g5DRraFinvYkBVjiSKpWBeyjFsSYbLhVtMNtY1Kgc00A1T4SdCr";
+    //const STRIPE_KEY="pk_test_51P6xFNSGkd7D0uBHYVVN7GnFaA0WEw9lD7yCLOOpV4Ce4P7g5DRraFinvYkBVjiSKpWBeyjFsSYbLhVtMNtY1Kgc00A1T4SdCr";
 
     const getData=async()=>{
         try{
@@ -97,18 +97,18 @@ function BookShow(){
     const book=async(transactionId="")=>{
         try{
             dispatch(ShowLoading());
-            // const response=await BookShowTickets({
-            //     show:params.id,
-            //     seat:selectedSeats,
-            //     transactionId,
-            //     user:user._id
-            // })
-            // if(response.success){
-            //     message.success(response.message);
-            //     navigate("/profile");
-            // }else{
-            //     message.error(response.message);
-            // }
+            const response=await BookShowTickets({
+                show:params.id,
+                seat:selectedSeats,
+                transactionId,
+                user:user._id
+            })
+            if(response.success){
+                message.success("Show Booking done!");
+                navigate("/profile");
+            }else{
+                message.error(response.message);
+            }
             dispatch(HideLoading());
         }catch(error){
             message.error(error.message);
@@ -116,26 +116,30 @@ function BookShow(){
         }
     }
 
-    // const onToken=async (token)=>{
-    //   try{
-    //     dispatch(ShowLoading());
-    //     const response=await MakePayment(
-    //       token,
-    //       selectedSeats.length * show.ticketPrice * 100
-    //     );
-    //     if(response.success){
-    //       message.success(response.message);
-    //       //book(response.data)
-    //     }
-    //     else{
-    //       message.error(response.message);
-    //     }
-    //     dispatch(HideLoading());
-    //   }catch(error){
-    //     message.error(error.message);
-    //     dispatch(HideLoading());
-    //   }
-    // }
+    const onToken=async (token)=>{
+      try{
+        dispatch(ShowLoading());
+        const response=await MakePayment(
+          token,
+          selectedSeats.length * show.ticketPrice * 100
+        );
+        if(response.success){
+          message.success(response.message);
+          book(response.data)
+        }
+        else{
+          message.error(response.message);
+        }
+        dispatch(HideLoading());
+      }catch(error){
+        message.error(error.message);
+        dispatch(HideLoading());
+      }
+    }
+
+  //   const onToken=(token)=>{
+  //  console.log(token)
+  // }
     useEffect(()=>{
         getData();
     },[])
@@ -178,10 +182,10 @@ function BookShow(){
                             </div>
                         </div>
                         <StripeCheckout
-                        billingAddress
-                        //token={onToken}
-                        stripeKey={STRIPE_KEY}
-                        currency="INR"
+                        //billingAddress
+                        token={onToken}
+                        stripeKey="pk_test_51P6xFNSGkd7D0uBHYVVN7GnFaA0WEw9lD7yCLOOpV4Ce4P7g5DRraFinvYkBVjiSKpWBeyjFsSYbLhVtMNtY1Kgc00A1T4SdCr"
+                        
                         amount={selectedSeats.length * show.ticketPrice * 100}
                         >
                         <Button title="Pay to Book" onClick={book}/>

@@ -18,7 +18,7 @@ export const BookShowTickets=async(payload)=>{
         const response=await axiosInstance.post("/api/bookings/book-show",payload);
         return response.data;
     }catch(err){
-        return err.response.data;
+        return err.response;
     }
 }
 

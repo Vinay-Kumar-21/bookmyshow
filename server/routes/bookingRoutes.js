@@ -13,25 +13,27 @@ router.post("/make-payment",authMiddleware,async(request,response)=>{
             source:token.id
         });
 
-        const charge=await stripe.charges.create({
-            amount,
-            currency:"inr",
+        const paymentIntent=await stripe.paymentIntents.create({
+            amount:amount,
+            currency:"usd",
             customer:customer.id,
+            payment_method_types: ['card'],
             receipt_email:token.email,
-            description:"Payment for booking tickets"
+            description:"Token has been assigned to the movie!"
         })
 
-        const transactionId=charge.id;
-        // const paymentIntent = await stripe.paymentIntents.create({
-        //   amount: Number(req.body.amount),
-        //   currency: "INR",
+        const transactionId=paymentIntent.id;
+          // const charge = await stripe.charges.create({
+        //     amount: amount,
+        //     currency: "usd",
+        //     customer: customer.id,
+        //     receipt_email: token.email,
+        //     description: "Token has been assigned to the movie!"
         // });
 
-        // const transactionId = paymentIntent.client_secret;
-
-        res.send({
+        response.send({
             success:true,
-            message:"payment successful!",
+            message:"payment successful! Ticket(s) booked!",
             data:transactionId,
         })
 
@@ -49,7 +51,7 @@ router.post("/book-show",authMiddleware,async(req,res)=>{
         const newBooking=new Booking(req.body);
         await newBooking.save();
 
-        const show=await show.findById(req.body.show);
+        const show=await show.findById(req.body.show).populate("movie");
         //update seats
         await Show.findByIdAndUpdate(req.body.show,{
             bookedSeats:[...show.bookedSeats,...req.body.seats]
