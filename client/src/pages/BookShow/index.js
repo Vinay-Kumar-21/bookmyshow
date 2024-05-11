@@ -99,7 +99,7 @@ function BookShow(){
             dispatch(ShowLoading());
             const response=await BookShowTickets({
                 show:params.id,
-                seat:selectedSeats,
+                seats:selectedSeats,
                 transactionId,
                 user:user._id
             })
@@ -108,10 +108,12 @@ function BookShow(){
                 navigate("/profile");
             }else{
                 message.error(response.message);
+                console.log("error in else ",response.message);
             }
             dispatch(HideLoading());
         }catch(error){
             message.error(error.message);
+            console.log("error in catch",error.message)
             dispatch(HideLoading());
         }
     }
@@ -188,7 +190,7 @@ function BookShow(){
                         
                         amount={selectedSeats.length * show.ticketPrice * 100}
                         >
-                        <Button title="Pay to Book" onClick={book}/>
+                        <Button title="Pay to Book"/>
                         </StripeCheckout>
                         
                     </div>
